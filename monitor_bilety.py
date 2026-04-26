@@ -33,10 +33,9 @@ INTERVAL_SEC = 30
 
 # Słowa kluczowe oznaczające DOSTĘPNOŚĆ biletu
 AVAILABLE_KEYWORDS = [
-    "kup bilet",
-    "dodaj do koszyka",
-    "wybierz miejsca",
-    "wolne miejsca"
+    "wybierz termin",
+    "wybierz bilety",
+    "do koszyka"
 ]
 
 # Słowa kluczowe oznaczające BRAK biletów
