@@ -25,7 +25,8 @@ UNAVAILABLE_KEYWORDS = [
     "brak biletów",
     "wyprzedane",
     "brak wolnych miejsc",
-    "sold out"
+    "sold out",
+    "brak miejsc"
 ]
 
 logging.basicConfig(
