@@ -18,7 +18,8 @@ AVAILABLE_KEYWORDS = [
     "wybierz termin",
     "wybierz bilety",
     "do koszyka",
-    "kup bilet"
+    "kup bilet",
+    "rezerwacja/miejsca.html"
 ]
 
 UNAVAILABLE_KEYWORDS = [
