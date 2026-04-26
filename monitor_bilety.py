@@ -22,8 +22,8 @@ from datetime import datetime
 #   KONFIGURACJA — WYPEŁNIJ TO
 # ─────────────────────────────────────────
 
-TELEGRAM_TOKEN   = "WKLEJ_TOKEN_BOTA_TUTAJ"
-TELEGRAM_CHAT_ID = "WKLEJ_CHAT_ID_TUTAJ"
+TELEGRAM_TOKEN   = "8406145637:AAH9sZoexIVZ-HvjJPHZ4r9shPBNN8O0NCQ"
+TELEGRAM_CHAT_ID = "8604163513"
 
 # Link do konkretnego spektaklu na bilety.narodowy.pl
 SPECTACLE_URL = "https://bilety.narodowy.pl/"
