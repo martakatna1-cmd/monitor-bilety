@@ -26,7 +26,10 @@ TELEGRAM_TOKEN   = "8406145637:AAH9sZoexIVZ-HvjJPHZ4r9shPBNN8O0NCQ"
 TELEGRAM_CHAT_ID = "8604163513"
 
 # Link do konkretnego spektaklu na bilety.narodowy.pl
-SPECTACLE_URL = "https://bilety.narodowy.pl/"
+SPECTACLE_URLS = [
+    "https://bilety.narodowy.pl/",
+    "https://butik.teatrwielki.pl/rezerwacja/termin.html"
+]
 
 # Co ile sekund sprawdzać
 INTERVAL_SEC = 30
@@ -35,7 +38,8 @@ INTERVAL_SEC = 30
 AVAILABLE_KEYWORDS = [
     "wybierz termin",
     "wybierz bilety",
-    "do koszyka"
+    "do koszyka",
+    "kup bilet"
 ]
 
 # Słowa kluczowe oznaczające BRAK biletów
