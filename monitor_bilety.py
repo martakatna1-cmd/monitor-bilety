@@ -150,8 +150,9 @@ def main():
         check_count += 1
         log.info(f"Sprawdzenie #{check_count}...")
 
-        result = check_availability(SPECTACLE_URL)
-        status = result.get("status")
+        for url in SPECTACLE_URLS:
+    result = check_availability(url)
+    status = result.get("status")
 
         if status == "available":
             log.info(f"BILETY DOSTEPNE! Slowa: {result.get('keywords')}")
