@@ -1,8 +1,8 @@
+import requests
+from bs4 import BeautifulSoup
 import time
 import logging
-import requests
 from datetime import datetime
-from playwright.sync_api import sync_playwright
 
 TELEGRAM_TOKEN   = "8406145637:AAH9sZoexIVZ-HvjJPHZ4r9shPBNN8O0NCQ"
 TELEGRAM_CHAT_ID = "8604163513"
@@ -16,7 +16,7 @@ THEATRES = [
     {
         "name": "Teatr Wielki Opera Narodowa",
         "url": "https://butik.teatrwielki.pl/rezerwacja/termin.html",
-        "keywords": ["kup bilet", "rezerwacja/miejsca"]
+        "keywords": ["kup bilet", "btn--brown"]
     }
 ]
 
@@ -50,36 +50,36 @@ def send_telegram(message):
         log.error(f"Blad Telegram: {e}")
         return False
 
-def check_with_browser(url, keywords):
+def check_availability(url, keywords):
+    headers = {
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/120.0.0.0 Safari/537.36",
+        "Accept-Language": "pl-PL,pl;q=0.9",
+    }
     try:
-        with sync_playwright() as p:
-            browser = p.chromium.launch(headless=True)
-            page = browser.new_page()
-            page.goto(url, timeout=30000, wait_until="networkidle")
-            content = page.content().lower()
-            browser.close()
-
-            found_available   = [kw for kw in keywords            if kw in content]
-            found_unavailable = [kw for kw in UNAVAILABLE_KEYWORDS if kw in content]
-
-            if found_available and not found_unavailable:
-                return {"status": "available", "keywords": found_available}
-            elif found_unavailable and not found_available:
-                return {"status": "unavailable"}
-            elif found_available and found_unavailable:
-                return {"status": "available", "keywords": found_available}
-            else:
-                return {"status": "unknown"}
-    except Exception as e:
+        response = requests.get(url, headers=headers, timeout=15)
+        response.raise_for_status()
+    except requests.exceptions.RequestException as e:
         return {"status": "error", "detail": str(e)}
 
-def format_alert(theatre_name, url, keywords):
+    content = response.text.lower()
+
+    found_available   = [kw for kw in keywords             if kw in content]
+    found_unavailable = [kw for kw in UNAVAILABLE_KEYWORDS if kw in content]
+
+    if found_available:
+        return {"status": "available", "keywords": found_available}
+    elif found_unavailable:
+        return {"status": "unavailable"}
+    else:
+        return {"status": "unknown"}
+
+def format_alert(name, url, keywords):
     now = datetime.now().strftime("%d.%m.%Y %H:%M:%S")
     kw  = ", ".join(keywords)
     return (
         f"🎭 <b>BILETY DOSTEPNE!</b>\n"
         f"━━━━━━━━━━━━━━━━━━━\n"
-        f"🏛 {theatre_name}\n"
+        f"🏛 {name}\n"
         f"🕐 {now}\n"
         f"🔗 {url}\n"
         f"✅ Znalezione: <i>{kw}</i>\n"
@@ -108,7 +108,7 @@ def main():
             name     = theatre["name"]
             keywords = theatre["keywords"]
 
-            result = check_with_browser(url, keywords)
+            result = check_availability(url, keywords)
             status = result.get("status")
 
             if status == "available":
