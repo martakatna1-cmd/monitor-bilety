@@ -16,7 +16,7 @@ INTERVAL_SEC = 30
 
 AVAILABLE_KEYWORDS = [
     "wybierz termin",
-    "wybierz bilet",
+    "wybierz bilety",
     "do koszyka",
     "kup bilet"
 ]
